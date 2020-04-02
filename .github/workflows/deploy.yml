@@ -1,0 +1,35 @@
+name: "update website"
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  job_deploy_website:
+    name: "update website"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "add keys"
+        run: |
+          mkdir ~/.ssh
+          echo "${{ secrets.GH_ACTIONS_DEPLOY_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -t rsa github.com
+      - uses: actions/checkout@v1
+      - name: "checkout"
+      - name: "scrape trailers"
+        run: bash scraper.sh
+      - name: "deploy index.html"
+        run: |
+          git config --global user.email "spaghettiwews@outlook.com"
+          git config --global user.name $GITHUB_ACTOR
+          msg="rebuilding site `date`"
+          if [ $# -eq 1 ]
+            then msg="$1"
+          fi
+          if ! git diff --no-ext-diff --quiet --exit-code; then
+            git add .
+            git commit -m "$msg"
+            git push origin master
+          fi
