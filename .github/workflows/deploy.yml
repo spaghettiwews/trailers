@@ -10,24 +10,36 @@ jobs:
     name: "update website"
     runs-on: ubuntu-latest
     steps:
-      # - name: "add keys"
-      # run: |
-      #   mkdir ~/.ssh
-      #   echo "${{ secrets.GH_ACTIONS_DEPLOY_KEY }}" > ~/.ssh/id_rsa
-      #   chmod 600 ~/.ssh/id_rsa
-      #   ssh-keyscan -t rsa github.com
+      - name: "add keys"
+        run: |
+          mkdir ~/.ssh
+          echo "${{ secrets.GH_ACTIONS_DEPLOY_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -t rsa github.com
       - uses: actions/checkout@v1
-        with:
-          ssh-key: ${{ secrets.GH_ACTIONS_DEPLOY_KEY }}
-      - name: "checkout"
-        run: git checkout master
+      - name: "checkout and create worktree in public using gh-pages branch"
+        run: |
+          git checkout master
+          git worktree prune
+          rm -rf .git/worktrees/public/
+          git worktree add -B gh-pages public origin/gh-pages
       - name: "scrape trailers"
         run: |
-          # bash scraper.sh
-          echo $(date +"%A,%e %B %Y @ %T") >> index.html
+          bash scraper.sh
       - name: "deploy index.html"
         run: |
+          cd public
           git remote set-url origin ${{ secrets.GH_ACTIONS_SSH_REMOTE }}
           git remote -v
           git config --global user.email "spaghettiwews@outlook.com"
           git config --global user.name $GITHUB_ACTOR
+          git config --global user.name $GITHUB_ACTOR
+          msg="rebuilding site `date`"
+          if [ $# -eq 1 ]
+            then msg="$1"
+          fi
+          if ! git diff --no-ext-diff --quiet --exit-code; then
+            git add .
+            git commit -m "$msg"
+            git push
+          fi
