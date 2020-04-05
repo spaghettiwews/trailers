@@ -2,7 +2,7 @@
 
 PAGINATE=50
 PAGER=""
-STYLE="iframe{position:relative!important;width:600px!important;height:320px!important;display:block;margin:1rem auto;}h2{max-width:600px;margin:2rem auto;font-family:monospace;}.pagination{list-style:none;display:flex;padding:0;max-width:600px;margin:2rem auto;flex-wrap: wrap;}.pagination>li{padding:0.5rem;}@media screen (max-width:768px){body{padding:0 1rem;}iframe{width:100%important;}}"
+STYLE="iframe{position:relative!important;max-width:600px!important;height:320px!important;display:block;margin:1rem auto;}h2{max-width:600px;margin:2rem auto;font-family:monospace;}.pagination{list-style:none;display:flex;padding:0;max-width:600px;margin:2rem auto;flex-wrap: wrap;}.pagination>li{padding:0.5rem;}@media (max-width:768px){body{padding:0 1rem;}iframe{width:100%important;}}"
 
 scrape() {
     local END_YEAR=2015
