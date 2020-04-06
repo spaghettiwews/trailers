@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - master
+  schedule:
+      - cron: "0 23,00 * * *"
 
 jobs:
   job_deploy_website:
