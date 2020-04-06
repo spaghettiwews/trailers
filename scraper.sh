@@ -2,7 +2,7 @@
 
 PAGINATE=50
 PAGER=""
-STYLE="body{max-width:1000px;margin:0 auto;padding:0 1rem;}.wrapper{margin:0 auto 1rem;max-width:1000px;padding:56.25% 0 0 0;position:relative;}iframe{position:absolute;top:0;left:0;width:100%;height:100%;}h2{max-width:1000px;margin:2rem auto;font-family:monospace;}.pagination{list-style:none;display:flex;padding:0;max-width:1000px;margin:2rem auto;flex-wrap: wrap;}.pagination>li{padding:0.5rem;}"
+STYLE="body{max-width:1000px;margin:0 auto;padding:0 1rem;}.wrapper{margin:0 auto 1rem;max-width:1000px;padding:56.25% 0 0 0;position:relative;}iframe{position:absolute;top:0;left:0;width:100%;height:100%;}h2{max-width:1000px;margin:2rem auto;font-family:monospace;}.pagination{font-family:monospace;font-size:1rem;font-weight:bold;list-style:none;display:flex;padding:0;max-width:1000px;margin:2rem auto;flex-wrap: wrap;}.pagination>li{border:1px solid #ccc;margin:0 0.3rem;}.pagination>li:first-child>a{font-size:0;}.pagination>li:first-child>a::before{content:'1';font-size:1rem;}.pagination a{display:block;text-decoration:none;padding:0.5rem;}"
 
 scrape() {
     local END_YEAR=2015
@@ -45,13 +45,13 @@ scrape() {
 paginate() {
     local COUNT=0
     local FILENAME="index.html"
-    local LAST_UPDATED=$(date +"%A,%e %B %Y @ %T")
+    local LAST_UPDATED=$(TZ='Africa/Johannesburg' date +"%A,%e %B %Y @ %T %Z")
 
     while read -r line
     do 
         if [[ ($(( COUNT % $1 )) -eq 0) && (COUNT -ne 0) ]]
         then
-            local PAGE_NUMBER=$((COUNT / $1))
+            local PAGE_NUMBER=$((COUNT / $1 + 1))
             FILENAME="${PAGE_NUMBER}.html"
         fi
         if [[ ($(( COUNT % $1 )) -eq 0) || (COUNT -eq 0) ]]
