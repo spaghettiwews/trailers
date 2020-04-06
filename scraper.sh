@@ -2,10 +2,10 @@
 
 PAGINATE=50
 PAGER=""
-STYLE="iframe{position:relative!important;max-width:600px!important;height:320px!important;display:block;margin:1rem auto;}h2{max-width:600px;margin:2rem auto;font-family:monospace;}.pagination{list-style:none;display:flex;padding:0;max-width:600px;margin:2rem auto;flex-wrap: wrap;}.pagination>li{padding:0.5rem;}@media (max-width:768px){body{padding:0 1rem;}iframe{width:100%important;}}"
+STYLE="body{max-width:1000px;margin:0 auto;padding:0 1rem;}.wrapper{margin:0 auto 1rem;max-width:1000px;padding:56.25% 0 0 0;position:relative;}iframe{position:absolute;top:0;left:0;width:100%;height:100%;}h2{max-width:1000px;margin:2rem auto;font-family:monospace;}.pagination{list-style:none;display:flex;padding:0;max-width:1000px;margin:2rem auto;flex-wrap: wrap;}.pagination>li{padding:0.5rem;}"
 
 scrape() {
-    local END_YEAR=2015
+    local END_YEAR=2020
     local END_MONTH=1
     local CURRENT_YEAR=$(date +"%Y")
     local CURRENT_MONTH=$(date +"%_m" | xargs)
@@ -32,7 +32,8 @@ scrape() {
                 grep -E "trailers?" |
                 xargs curl -s --compressed |
                 grep -o -E "${TRAILER_REGEX}" |
-                sed s/"<iframe src"/"<iframe data-src"/g |
+                sed s@"<iframe src"@"<div class='wrapper'><iframe data-src"@g |
+                sed s@"</iframe>"@"</iframe></div>"@g |
                 cat >> public/tmp
             }
             ((MONTH--))
