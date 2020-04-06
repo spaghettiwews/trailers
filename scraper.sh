@@ -5,7 +5,7 @@ PAGER=""
 STYLE="body{max-width:1000px;margin:0 auto;padding:0 1rem;}.wrapper{margin:0 auto 1rem;max-width:1000px;padding:56.25% 0 0 0;position:relative;}iframe{position:absolute;top:0;left:0;width:100%;height:100%;}h2{max-width:1000px;margin:2rem auto;font-family:monospace;}.pagination{list-style:none;display:flex;padding:0;max-width:1000px;margin:2rem auto;flex-wrap: wrap;}.pagination>li{padding:0.5rem;}"
 
 scrape() {
-    local END_YEAR=2020
+    local END_YEAR=2015
     local END_MONTH=1
     local CURRENT_YEAR=$(date +"%Y")
     local CURRENT_MONTH=$(date +"%_m" | xargs)
@@ -27,10 +27,10 @@ scrape() {
         do
             echo ${BASE_URL}/${YEAR}/${MONTH}
             {
-                curl -s --compressed "${BASE_URL}/${YEAR}/${MONTH}" | 
+                curl -s --compressed "${BASE_URL}/${YEAR}/${MONTH}" 2> /dev/null | 
                 grep -o -E "${PAGE_URL_REGEX}" | 
                 grep -E "trailers?" |
-                xargs curl -s --compressed |
+                xargs curl -s --compressed 2> /dev/null |
                 grep -o -E "${TRAILER_REGEX}" |
                 sed s@"<iframe src"@"<div class='wrapper'><iframe data-src"@g |
                 sed s@"</iframe>"@"</iframe></div>"@g |
@@ -71,9 +71,10 @@ paginate() {
 
 build_pager() {
     PAGER+="<ul class='pagination'>"
-    for file in public/*.html
+    for file in $(find public/*.html | sed s@"public/"@""@g  | sort -n)
     do
-        local PAGE_FILENAME=${file##*/}
+        # local PAGE_FILENAME=${file##*/}
+        local PAGE_FILENAME=$file
         local PAGE_NAME=(${PAGE_FILENAME%%.*})
         PAGER+="<li><a href='${PAGE_FILENAME}'>${PAGE_NAME}</a></li>"
     done
