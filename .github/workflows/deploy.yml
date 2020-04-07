@@ -1,11 +1,11 @@
 name: "update website"
 
 on:
-  push:
-    branches:
-      - master
+  #push:
+  #  branches:
+  #    - master
   schedule:
-      - cron: "0 0,12 * * *"
+      - cron: "0 22,10 * * *"
 
 jobs:
   job_deploy_website:
