@@ -1,3 +1,5 @@
+![update website](https://github.com/spaghettiwews/trailers/workflows/update%20website/badge.svg)
+
 ### Problem
 
 I like movies, but because I'm a fairly busy and lazy guy (_mostly lazy_) I don't have the time to find and curate my own list of stuff I'd like to watch. I prefer that someone else do that for me. That's why I like The Verge's "New trailers you have watch" series - it makes it easier for me to just peruse the latest trailers and decide what to invest my time in. Still, even with that I have to visit the site regularly to check if there's any new content. Like I said, I'm busy and frankly ain't nobody (_I just realised that this is a double negative_) got time for dat.
