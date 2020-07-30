@@ -10,7 +10,7 @@ I like movies, but because I'm a fairly busy and lazy guy (_mostly lazy_) I don'
 
 This is a shell script that scrapes The Verge's Film archives for trailers and collates them into a single page which is far much easier (_I think it is_) to browse because it only contains the trailers, nothing else. This probably could have been easily achieved using a RSS client with a simple filter, but where's the fun in that.
 
-If you spot any noob errors in there, don't judge me harsly, I wrote this while taking this [Unix Tools course](https://www.edx.org/course/unix-tools-data-software-and-production-engineering).
+If you spot any noob errors in there, don't judge me harshly, I wrote this while taking this [Unix Tools course](https://www.edx.org/course/unix-tools-data-software-and-production-engineering).
 
 ### Contribution
 
